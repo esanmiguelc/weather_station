@@ -14,6 +14,12 @@ $ bin/setup
 $ bin/dev
 ```
 
+## To run the tests
+
+```
+$ bundle exec rspec
+```
+
 ## Deconstructing
 
 `FetchForecast` is an "interactor" class which orchestrates all the work to be done  (validating, cleaning data, fetching the forecast... etc) in order to fetch the current forecast for a given zip.
