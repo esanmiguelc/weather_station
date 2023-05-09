@@ -1,14 +1,14 @@
 class FetchForecast
+
   def self.for(zip)
-    Result.success(WeatherResult.new(
-      "Chicago",
-      Forecast.new(10, 5, 7, DateTime.now),
-      [
-        Forecast.new(10, 5, 7, DateTime.now + 1.day),
-        Forecast.new(10, 5, 7, DateTime.now + 2.day),
-        Forecast.new(10, 5, 7, DateTime.now + 3.day)
-      ],
-      true
-    ))
+    if valid?(zip)
+      WeatherService.fetch(zip)
+    else
+      Result.fail("Invalid zip")
+    end
+  end
+
+  def self.valid?(zip)
+    zip.length == 5
   end
 end
