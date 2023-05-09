@@ -18,6 +18,8 @@ $ bin/dev
 
 `WeatherService` makes the actual network call to the weather API. By putting the network call behind this class we can make changes to the api we use and as long as we abide by the existing contract in what we return the rest of the code is none the wiser.
 
+`AddressValidator` is encapsulated to reduce duplication and extending it's behavior in the future. We might want to improve the logic or even make a network call to validate against an address validation service. In this case, like the `WeatherService` none of our other code needs to know that anything has changed.
+
 `Result` class is a container for the results of "interactor" classes. This models the success or failure of those interactors and provides us a clean interface for us to use in our controller.
 
 ## Additional Considerations

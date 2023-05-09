@@ -5,10 +5,20 @@ class WeatherController < ApplicationController
   end
 
   def show
-    @weather = FetchForecast.for(params[:zip]).value
+    result = FetchForecast.for(params[:zip])
+    if result.errors?
+      redirect_to root_path
+    else
+      @weather = result.value
+    end
   end
 
   def search
-    redirect_to show_weather_path(60647)
+    result = AddressValidator.validate(params[:location])
+    if result.errors?
+      redirect_to root_path
+    else
+      redirect_to show_weather_path(result.value.zip)
+    end
   end
 end

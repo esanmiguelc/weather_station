@@ -30,6 +30,16 @@ RSpec.describe "Weather", type: :request do
 
       expect(response).to have_http_status(:success)
     end
+
+    it "redirects to the main page when the forecast result is invalid" do
+      result = Result.fail("Failed")
+      expect(FetchForecast).to receive(:for).and_return(result)
+
+      get "/weather/show"
+
+      expect(response).to have_http_status(:redirect)
+      expect(response).to redirect_to(root_path)
+    end
   end
 
   describe "POST /search" do
@@ -38,6 +48,13 @@ RSpec.describe "Weather", type: :request do
 
       expect(response).to have_http_status(:redirect)
       expect(response).to redirect_to(show_weather_path(60647))
+    end
+
+    it "redirects to the main page when zip is invalid" do
+      post "/weather/search", params: { location: "invalid location" }
+
+      expect(response).to have_http_status(:redirect)
+      expect(response).to redirect_to(root_path)
     end
   end
 end
