@@ -30,6 +30,10 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  app_title: "Weather Forecast"
   invalid_address: "Invalid address. Please use a US address with a valid zip code"
   weather_api_failure: "Unable to fetch weather"
+  get_weather: "Get weather"
+  input_placeholder_prompt: "Type in your location"
+  cached: "Cached"
+  search_for_new_location: "Search for another location"

@@ -6,7 +6,7 @@
         <p class="text-slate-500 text-sm">high: <%= @weather.current_forecast.high %>°</p>
         <p class="text-slate-500 text-sm">low: <%= @weather.current_forecast.low %>°</p>
         <%- if @weather.cached %>
-          <p class="text-slate-500 text-sm border border-slate-500 rounded text-center p-1 mt-1">Cached</p>
+          <p class="text-slate-500 text-sm border border-slate-500 rounded text-center p-1 mt-1"><%= t(:cached) %></p>
         <% end %>
       </div>
       <span class="font-bold text-8xl"><%= @weather.current_forecast.temperature %>°</span>
