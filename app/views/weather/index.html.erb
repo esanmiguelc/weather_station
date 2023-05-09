@@ -2,7 +2,7 @@
   <h1 class="justify-center font-bold text-4xl text-center">Weather Forecast</h1>
   <%- if flash[:alert] %>
     <div class="m-auto bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
-      <p><%= flash[:alert] %></p>
+      <p><%= t(flash[:alert]) %></p>
     </div>
   <% end %>
   <div class="m-auto">

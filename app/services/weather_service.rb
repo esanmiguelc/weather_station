@@ -31,7 +31,7 @@ class WeatherService
     else
       # We were not able to make a successful call so log a warning so that it can be looked into.
       Rails.logger.warn("The Weather API response failed with code: #{response.code}")
-      Result.fail("Unable to fetch weather")
+      Result.fail(:weather_api_failure)
     end
   end
 

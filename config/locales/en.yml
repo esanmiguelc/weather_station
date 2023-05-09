@@ -31,3 +31,5 @@
 
 en:
   hello: "Hello world"
+  invalid_address: "Invalid address. Please use a US address with a valid zip code"
+  weather_api_failure: "Unable to fetch weather"

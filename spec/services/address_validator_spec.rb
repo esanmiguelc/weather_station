@@ -14,6 +14,6 @@ describe AddressValidator do
     result = AddressValidator.validate("not a zip")
 
     expect(result.errors?).to eq(true)
-    expect(result.errors).to eq("Invalid address")
+    expect(result.errors).to eq(:invalid_address)
   end
 end
