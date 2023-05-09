@@ -4,7 +4,7 @@ class WeatherService
   def self.fetch(zip)
     forecast_url = "#{WEATHER_API_URL_BASE}/forecast.json?key=#{WEATHER_API_KEY}&q=#{zip}&days=3"
 
-    response = Typhoeus.get(forecast_url)
+    response = Typhoeus.get(forecast_url, cache_ttl: CACHE_TTL)
     if response.success?
       forecast_response = JSON.parse(response.body)
 
@@ -38,4 +38,5 @@ class WeatherService
   private
 
   WEATHER_API_KEY = ENV["WEATHER_API_KEY"]
+  CACHE_TTL = 30.minutes.in_seconds
 end

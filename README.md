@@ -1,5 +1,7 @@
 # README
 
+Example app demonstrating how to call the WeatherAPI service using a rails application.
+
 ## Setup
 
 ```
@@ -16,7 +18,7 @@ $ bin/dev
 
 `FetchForecast` is an "interactor" class which orchestrates all the work to be done  (validating, cleaning data, fetching the forecast... etc) in order to fetch the current forecast for a given zip.
 
-`WeatherService` makes the actual network call to the weather API. By putting the network call behind this class we can make changes to the api we use and as long as we abide by the existing contract in what we return the rest of the code is none the wiser.
+`WeatherService` makes the actual network call to the weather API. By putting the network call behind this class we can make changes to the api we use and as long as we abide by the existing contract in what we return the rest of the code is none the wiser. This service also caches the request for 30 minutes given a specific zip.
 
 `AddressValidator` is encapsulated to reduce duplication and extending it's behavior in the future. We might want to improve the logic or even make a network call to validate against an address validation service. In this case, like the `WeatherService` none of our other code needs to know that anything has changed.
 
@@ -31,3 +33,5 @@ $ bin/dev
 - For this example I used plain javascript, depending on the needs I would consider a framework such as React if richer UI experiences is required or other priorities are valued such as faster rendering of the initial page and fetching the information after.
 
 - The api key is in the checked in `.env` file for the sake of easier setup and testing. However, a real production key should exist in a safe space and assigned to the environment as part of a CI/CD step.
+
+- For the errors we used symbols to match translation keys so that we can display the appropriate message to the user. This is specially helpful if internationalization is desired in the future as it makes adding other languages trivial.
