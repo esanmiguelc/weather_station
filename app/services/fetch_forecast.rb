@@ -2,9 +2,10 @@ class FetchForecast
 
   def self.for(zip)
     # If zip is invalid, no point in even trying to fetch
-    return Result.fail("Invalid zip") unless valid?(zip)
+    validation_result = AddressValidator.validate(zip)
+    return validation_result if validation_result.errors?
 
-    WeatherService.fetch(zip)
+    WeatherService.fetch(validation_result.value.zip)
   end
 
   def self.valid?(zip)

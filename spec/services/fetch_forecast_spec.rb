@@ -1,3 +1,5 @@
+require 'rails_helper'
+
 describe FetchForecast do
 
   it "returns a result with an error if the zip is wrong" do
