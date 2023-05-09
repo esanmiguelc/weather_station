@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+  get "weather/index"
+  get "weather/:zip", to: "weather#show"
 
-  # Defines the root path route ("/")
-  # root "articles#index"
+  root "weather#index"
 end
