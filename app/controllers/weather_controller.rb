@@ -1,8 +1,11 @@
 class WeatherController < ApplicationController
+
+
   def index
   end
 
   def show
+    @weather = FetchForecast.for(params[:zip]).value
   end
 
   def search

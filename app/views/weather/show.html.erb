@@ -1,4 +1,25 @@
-<div>
-  <h1 class="font-bold text-4xl">Weather#show</h1>
-  <p>Find me in app/views/weather/show.html.erb</p>
+<div class="mx-auto">
+  <div class="max-w-md p-8 mx-auto rounded-lg bg-gray-900 text-gray-100">
+    <div class="flex justify-between space-x-8">
+      <div class="flex flex-col text-left">
+        <h1 class="text-xl font-semibold"><%= @weather.city %></h1>
+        <p class="text-slate-500 text-sm">high: <%= @weather.current_forecast.high %>°</p>
+        <p class="text-slate-500 text-sm">low: <%= @weather.current_forecast.low %>°</p>
+        <%- if @weather.cached %>
+          <p class="text-slate-500 text-sm border border-slate-500 rounded text-center p-1 mt-1">Cached</p>
+        <% end %>
+      </div>
+      <span class="font-bold text-8xl"><%= @weather.current_forecast.temperature %>°</span>
+    </div>
+    <div class="flex justify-between mt-8 space-x-4 text-slate-500">
+      <%- @weather.extended_forecast.each do |forecast| %>
+        <div class="flex flex-col items-center space-y-1">
+          <span class="uppercase"><%= forecast.date.strftime('%a') %></span>
+          <span><%= forecast.temperature %>°</span>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <a href="/" class="text-blue-400 hover:text-blue-600 text-center">Search for another location</a>
 </div>

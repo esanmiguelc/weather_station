@@ -1,6 +1,19 @@
 require 'rails_helper'
 
 RSpec.describe "Weather", type: :request do
+  let(:sample_weather_result) do
+    WeatherResult.new(
+      "Chicago",
+      Forecast.new(10, 5, 7, DateTime.now),
+      [
+        Forecast.new(10, 5, 7, DateTime.now + 1.day),
+        Forecast.new(10, 5, 7, DateTime.now + 2.day),
+        Forecast.new(10, 5, 7, DateTime.now + 3.day)
+      ],
+      true
+    )
+  end
+
   describe "GET /index" do
     it "returns http success" do
       get "/weather/index"
@@ -10,7 +23,11 @@ RSpec.describe "Weather", type: :request do
 
   describe "GET /show" do
     it "returns http success" do
+      result = Result.success(sample_weather_result)
+      expect(FetchForecast).to receive(:for).and_return(result)
+
       get "/weather/show"
+
       expect(response).to have_http_status(:success)
     end
   end
