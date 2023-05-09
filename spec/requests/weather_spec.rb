@@ -39,6 +39,7 @@ RSpec.describe "Weather", type: :request do
 
       expect(response).to have_http_status(:redirect)
       expect(response).to redirect_to(root_path)
+      expect(flash[:alert]).to eq("Failed")
     end
   end
 
@@ -55,6 +56,7 @@ RSpec.describe "Weather", type: :request do
 
       expect(response).to have_http_status(:redirect)
       expect(response).to redirect_to(root_path)
+      expect(flash[:alert]).to eq("Invalid address")
     end
   end
 end

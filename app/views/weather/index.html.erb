@@ -1,8 +1,13 @@
 <div class="flex flex-col w-full place-content-center">
   <h1 class="justify-center font-bold text-4xl text-center">Weather Forecast</h1>
+  <%- if flash[:alert] %>
+    <div class="m-auto bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+      <p><%= flash[:alert] %></p>
+    </div>
+  <% end %>
   <div class="m-auto">
     <%= form_with url: search_weather_path, method: :post do |form| %>
-      <%= form.text_field :location, class: "mt-2 p-2 border border-gray-300 rounded focus:border-blue-500 focus:outline-none", placeholder: "Type in your location" %>
+      <%= form.text_field :location, class: "mt-2 p-2 border border-gray-300 rounded focus:border-blue-500 focus:outline-none", placeholder: "Type in your location", required: true %>
       <%= form.submit "Get weather", class: "bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" %>
     <% end %>
   </div>
