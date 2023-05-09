@@ -1,15 +1,33 @@
 class WeatherService
 
   def self.fetch(zip)
-      Result.success(WeatherResult.new(
-        "Chicago",
-        Forecast.new(10, 5, 7, DateTime.now),
-        [
-          Forecast.new(10, 5, 7, DateTime.now + 1.day),
-          Forecast.new(10, 5, 7, DateTime.now + 2.day),
-          Forecast.new(10, 5, 7, DateTime.now + 3.day)
-        ],
-        true
-      ))
+    forecast_url = "#{WEATHER_API_URL_BASE}/forecast.json?key=#{WEATHER_API_KEY}&q=#{zip}&days=3"
+
+    response = Typhoeus.get(forecast_url)
+    forecast_response = JSON.parse(response.body)
+
+    Result.success(WeatherResult.new(
+      forecast_response['location']['name'],
+      Forecast.new(
+        forecast_response['forecast']['forecastday'][0]['day']['maxtemp_f'],
+        forecast_response['forecast']['forecastday'][0]['day']['mintemp_f'],
+        forecast_response['current']['temp_f'],
+        DateTime.now
+      ),
+      forecast_response['forecast']['forecastday'][0..2].map do |day|
+        Forecast.new(
+          day['day']['maxtemp_f'],
+          day['day']['mintemp_f'],
+          day['day']['avgtemp_f'],
+          DateTime.parse(day['date']),
+        )
+      end,
+      response.cached?
+    ))
   end
+
+  private
+
+  WEATHER_API_URL_BASE = "http://api.weatherapi.com/v1"
+  WEATHER_API_KEY = ENV["WEATHER_API_KEY"]
 end
