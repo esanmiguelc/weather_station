@@ -5,30 +5,34 @@ class WeatherService
     forecast_url = "#{WEATHER_API_URL_BASE}/forecast.json?key=#{WEATHER_API_KEY}&q=#{zip}&days=3"
 
     response = Typhoeus.get(forecast_url)
-    return Result.fail("Unable to fetch weather") unless response.success?
+    if response.success?
+      forecast_response = JSON.parse(response.body)
 
-    forecast_response = JSON.parse(response.body)
-
-    Result.success(
-      WeatherResult.new(
-        forecast_response['location']['name'],
-        Forecast.new(
-          forecast_response['forecast']['forecastday'][0]['day']['maxtemp_f'],
-          forecast_response['forecast']['forecastday'][0]['day']['mintemp_f'],
-          forecast_response['current']['temp_f'],
-          DateTime.now
-        ),
-        forecast_response['forecast']['forecastday'][0..2].map do |day|
+      Result.success(
+        WeatherResult.new(
+          forecast_response['location']['name'],
           Forecast.new(
-            day['day']['maxtemp_f'],
-            day['day']['mintemp_f'],
-            day['day']['avgtemp_f'],
-            DateTime.parse(day['date']),
-          )
-        end,
-        response.cached?
+            forecast_response['forecast']['forecastday'][0]['day']['maxtemp_f'],
+            forecast_response['forecast']['forecastday'][0]['day']['mintemp_f'],
+            forecast_response['current']['temp_f'],
+            DateTime.now
+          ),
+          forecast_response['forecast']['forecastday'][0..2].map do |day|
+            Forecast.new(
+              day['day']['maxtemp_f'],
+              day['day']['mintemp_f'],
+              day['day']['avgtemp_f'],
+              DateTime.parse(day['date']),
+            )
+          end,
+          response.cached?
+        )
       )
-    )
+    else
+      # We were not able to make a successful call so log a warning so that it can be looked into.
+      Rails.logger.warn("The Weather API response failed with code: #{response.code}")
+      Result.fail("Unable to fetch weather")
+    end
   end
 
   private
