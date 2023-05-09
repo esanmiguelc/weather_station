@@ -28,7 +28,7 @@ $ bin/dev
 
 - With additional time I would use more address validation and autocompletion on the UI with something like google maps api.
 
-- For the sake of simplicity, we are currently caching with the default memory store. In order to have a more robust caching implementation it should use a different centralized store such as Redis or MemCache so that it can use the cache across distinct instances of the rails server
+- For the sake of simplicity, we are currently caching with the default memory store. In order to have a more robust caching implementation it should use a different centralized store such as Redis or MemCache so that it can use the cache across distinct instances of the rails server. In order to see the caching look up a location and refresh the page with the temperature, that will add a "Cached" label to the widget.
 
 - For this example I used plain javascript, depending on the needs I would consider a framework such as React if richer UI experiences is required or other priorities are valued such as faster rendering of the initial page and fetching the information after.
 
